@@ -38,15 +38,18 @@ public class DoublyLinkedLists<T> {
     }
 
     public void addAt(T data, int index) {
-        if (index < 0) throw new IndexOutOfBoundsException("Index can't be negative value");
+        if (index < 0 || index>length()) throw new IndexOutOfBoundsException("Index Out of Bound");
         if (index == 0) {
             addFirst(data);
+            return;
+        }
+        if (index == length()){
+            addLast(data);
             return;
         }
         Node current = head;
         Node newNode = new Node(data);
         for (int i = 0; i < index - 1; i++) {
-            if (current == null || current.next == null) throw new IndexOutOfBoundsException("Index out of bound");
             current = current.next;
         }
         newNode.prev = current;
@@ -75,15 +78,27 @@ public class DoublyLinkedLists<T> {
             deleteFirst();
             return;
         }
-        Node prep = head;
-        Node succ = head.next;
-        for (int i = 0; i<index - 1; i++){
-            if (prep == null || succ == null) throw new IndexOutOfBoundsException("Index out of bound");
-            prep = prep.next;
-            succ = succ.next;
+        if (index == length() - 1){
+            deleteLast();
+            return;
         }
-        prep.next = succ.next;
-        succ.next.prev = prep;
+        Node current = head;
+        for (int i = 0; i<index; i++){
+            current = current.next;
+        }
+        current.prev.next = current.next;
+        current.next.prev = current.prev;
+    }
+
+    public Node<T> getAt(int index){
+        if (index<0 || index>=length())
+            throw new IndexOutOfBoundsException("Index out of bound");
+
+        Node current = head;
+        for (int i = 0; i<index; i++){
+            current = current.next;
+        }
+        return current;
     }
 
     @Override
@@ -93,32 +108,32 @@ public class DoublyLinkedLists<T> {
 
 
     public static void main(String[] args) {
-        DoublyLinkedLists<Integer> doublyLinkedLists = new DoublyLinkedLists<>();
-        System.out.println(doublyLinkedLists);
+        DoublyLinkedLists<Integer> list = new DoublyLinkedLists<>();
+        System.out.println(list);
 
-        doublyLinkedLists.addFirst(1);
-        System.out.println(doublyLinkedLists);
+        list.addFirst(1);
+        list.addFirst(0);
+        System.out.println(list);
 
+        list.addLast(2);
+        list.addLast(3);
+        list.addLast(4);
+        System.out.println(list);
+        System.out.println("Length/Size : " + list.length());
 
-        doublyLinkedLists.addLast(2);
-        doublyLinkedLists.addLast(3);
-        doublyLinkedLists.addLast(4);
-        System.out.println(doublyLinkedLists);
-        System.out.println("Length/Size : " + doublyLinkedLists.length());
+        list.addAt(5, 1);
+        System.out.println(list);
 
-        doublyLinkedLists.addAt(5, 1);
-        System.out.println(doublyLinkedLists);
+        list.deleteAt(0);
+        System.out.println(list);
 
-        doublyLinkedLists.deleteAt(0);
-        System.out.println(doublyLinkedLists);
+        list.deleteAt(1);
+        System.out.println(list);
 
-        doublyLinkedLists.deleteAt(1);
-        System.out.println(doublyLinkedLists);
+        list.deleteLast();
+        System.out.println(list);
 
-        doublyLinkedLists.deleteLast();
-        System.out.println(doublyLinkedLists);
-
-
+        System.out.println(list.getAt(0).data);
 
     }
 }

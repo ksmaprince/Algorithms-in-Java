@@ -4,6 +4,20 @@ public class SinglyLinkedLists<T> {
 
     private Node head;
 
+    private boolean isEmpty() {
+        return head == null;
+    }
+
+    public int length() {
+        int length = 0;
+        Node current = head;
+        while (current != null) {
+            length++;
+            current = current.next;
+        }
+        return length;
+    }
+
     public void addFirst(T data) {
         Node newNode = new Node(data);
         newNode.next = head;
@@ -11,16 +25,16 @@ public class SinglyLinkedLists<T> {
     }
 
     public void addLast(T data) {
-        Node newNode = new Node(data);
         if (isEmpty()) {
-            head = newNode;
-        } else {
-            Node current = head;
-            while (current.next != null) {
-                current = current.next;
-            }
-            current.next = newNode;
+            addFirst(data);
+            return;
         }
+        Node newNode = new Node(data);
+        Node current = head;
+        while (current.next != null) {
+            current = current.next;
+        }
+        current.next = newNode;
     }
 
     public void addAt(int index, T data) {
@@ -34,7 +48,7 @@ public class SinglyLinkedLists<T> {
         Node newNode = new Node(data);
         Node current = head;
         for (int i = 0; i < index - 1; i++) {
-            if (current == null) {
+            if (current == null || current.next == null) {
                 throw new IndexOutOfBoundsException("Index out of bound");
             }
             current = current.next;
@@ -84,24 +98,21 @@ public class SinglyLinkedLists<T> {
         current.next = current.next.next;
     }
 
-    public int length() {
-        int length = 0;
-        Node current = head;
-        while (current != null) {
-            length++;
-            current = current.next;
-        }
-        return length;
-    }
+    public Node<T> getAt(int index){
+        if (index<0 || index>=length())
+            throw new IndexOutOfBoundsException("Index out of bound");
 
-    public Node<T> findMiddle(){
-        if (isEmpty()) throw new  IllegalStateException("Index can't be negative");
-        int middleIndex = length()/2;
-        Node<T> current = head;
-        for (int i = 0; i<middleIndex ; i++){
+        Node current = head;
+        for (int i = 0; i<index; i++){
             current = current.next;
         }
         return current;
+    }
+
+    public Node<T> findMiddle() {
+        if (isEmpty()) throw new IllegalStateException("Index can't be negative");
+        int middleIndex = length() / 2;
+        return getAt(middleIndex);
     }
 
     @Override
@@ -109,46 +120,44 @@ public class SinglyLinkedLists<T> {
         return (isEmpty()) ? "Empty List" : head.toString();
     }
 
-    public boolean isEmpty() {
-        return head == null;
-    }
-
     public static void main(String[] args) {
         SinglyLinkedLists<Integer> list = new SinglyLinkedLists<>();
-
         System.out.println(list);
-        // Add elements to the list
+
+        //Test Add First
+//        list.addFirst(1);
+//        list.addFirst(0);
+//        System.out.println(list);
+
+
+        // Test Add Last
+//        list.addLast(1);
+//        list.addLast(2);
+//        System.out.println(list);
+
+//        list.addAt(0, 10);
+//        list.addAt(-1, 8);
+//        list.addAt(4, 8);
+//        System.out.println(list);
+
+        //delete first with empty
+//        list.deleteFirst();
+//        System.out.println(list);
+
+        //delete first with existing data
+        list.addLast(0);
         list.addLast(1);
         list.addLast(2);
         list.addLast(3);
-        System.out.println(list); // Output: 1 2 3
+        list.addLast(4);
+        list.addLast(5);
+        System.out.println(list);
 
-        // Add element at the beginning
-        list.addFirst(0);
-        System.out.println(list); // Output: 0 1 2 3
-
-        // Add element at a specific position
-        list.addAt(2, 5);
-        System.out.println(list); // Output: 0 1 5 2 3
-
-        System.out.println(list.findMiddle().data);
-
-        // Delete the first element
         list.deleteFirst();
-        System.out.println(list); // Output: 1 5 2 3
+        System.out.println(list);
 
-        // Delete the last element
         list.deleteLast();
-        System.out.println(list); // Output: 1 5 2
+        System.out.println(list);
 
-        // Delete an element at a specific position
-        list.deleteAt(1);
-        System.out.println(list);// Output: 1 2
-
-        // Print the length of the list
-        System.out.println("Length of the list: " + list.length()); // Output: 2
-
-        // Check if the list is empty
-        System.out.println("Is the list empty? " + list.isEmpty()); // Output: false
     }
 }
