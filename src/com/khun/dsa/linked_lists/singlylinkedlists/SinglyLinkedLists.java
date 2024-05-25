@@ -1,12 +1,18 @@
-package com.khun.dsa.linked_lists;
+package com.khun.dsa.linked_lists.singlylinkedlists;
 
-public class SinglyLinkedLists {
+public class SinglyLinkedLists<T> {
 
     private Node head;
 
-    public void addLast(int data) {
+    public void addFirst(T data) {
         Node newNode = new Node(data);
-        if (head == null) {
+        newNode.next = head;
+        head = newNode;
+    }
+
+    public void addLast(T data) {
+        Node newNode = new Node(data);
+        if (isEmpty()) {
             head = newNode;
         } else {
             Node current = head;
@@ -17,13 +23,7 @@ public class SinglyLinkedLists {
         }
     }
 
-    public void addFirst(int data) {
-        Node newNode = new Node(data);
-        newNode.next = head;
-        head = newNode;
-    }
-
-    public void addAt(int index, int data) {
+    public void addAt(int index, T data) {
         if (index < 0) {
             throw new IndexOutOfBoundsException("Index cannot be negative");
         }
@@ -44,14 +44,14 @@ public class SinglyLinkedLists {
     }
 
     public void deleteFirst() {
-        if (head == null) {
+        if (isEmpty()) {
             throw new IllegalStateException("List is empty");
         }
         head = head.next;
     }
 
     public void deleteLast() {
-        if (head == null) {
+        if (isEmpty()) {
             throw new IllegalStateException("List is empty");
         }
         if (head.next == null) {
@@ -94,13 +94,19 @@ public class SinglyLinkedLists {
         return length;
     }
 
-    public void printList() {
-        Node current = head;
-        while (current != null) {
-            System.out.print(current.data + " ");
+    public Node<T> findMiddle(){
+        if (isEmpty()) throw new  IllegalStateException("Index can't be negative");
+        int middleIndex = length()/2;
+        Node<T> current = head;
+        for (int i = 0; i<middleIndex ; i++){
             current = current.next;
         }
-        System.out.println();
+        return current;
+    }
+
+    @Override
+    public String toString() {
+        return (isEmpty()) ? "Empty List" : head.toString();
     }
 
     public boolean isEmpty() {
@@ -108,33 +114,36 @@ public class SinglyLinkedLists {
     }
 
     public static void main(String[] args) {
-        SinglyLinkedLists list = new SinglyLinkedLists();
+        SinglyLinkedLists<Integer> list = new SinglyLinkedLists<>();
 
+        System.out.println(list);
         // Add elements to the list
         list.addLast(1);
         list.addLast(2);
         list.addLast(3);
-        list.printList(); // Output: 1 2 3
+        System.out.println(list); // Output: 1 2 3
 
         // Add element at the beginning
         list.addFirst(0);
-        list.printList(); // Output: 0 1 2 3
+        System.out.println(list); // Output: 0 1 2 3
 
         // Add element at a specific position
         list.addAt(2, 5);
-        list.printList(); // Output: 0 1 5 2 3
+        System.out.println(list); // Output: 0 1 5 2 3
+
+        System.out.println(list.findMiddle().data);
 
         // Delete the first element
         list.deleteFirst();
-        list.printList(); // Output: 1 5 2 3
+        System.out.println(list); // Output: 1 5 2 3
 
         // Delete the last element
         list.deleteLast();
-        list.printList(); // Output: 1 5 2
+        System.out.println(list); // Output: 1 5 2
 
         // Delete an element at a specific position
         list.deleteAt(1);
-        list.printList(); // Output: 1 2
+        System.out.println(list);// Output: 1 2
 
         // Print the length of the list
         System.out.println("Length of the list: " + list.length()); // Output: 2
