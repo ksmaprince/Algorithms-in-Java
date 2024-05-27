@@ -3,25 +3,17 @@ package com.khun.dsa.linked_lists.singlylinkedlists;
 public class SinglyLinkedLists<T> {
 
     private Node head;
+    private int size = 0;
 
     private boolean isEmpty() {
         return head == null;
-    }
-
-    public int length() {
-        int length = 0;
-        Node current = head;
-        while (current != null) {
-            length++;
-            current = current.next;
-        }
-        return length;
     }
 
     public void addFirst(T data) {
         Node newNode = new Node(data);
         newNode.next = head;
         head = newNode;
+        size++;
     }
 
     public void addLast(T data) {
@@ -35,26 +27,29 @@ public class SinglyLinkedLists<T> {
             current = current.next;
         }
         current.next = newNode;
+        size++;
     }
 
     public void addAt(int index, T data) {
-        if (index < 0) {
-            throw new IndexOutOfBoundsException("Index cannot be negative");
+        if (index < 0 || index>size) {
+            throw new IndexOutOfBoundsException("Index out of bound");
         }
         if (index == 0) {
             addFirst(data);
             return;
         }
+        if (index == size){
+            addLast(data);
+            return;
+        }
         Node newNode = new Node(data);
         Node current = head;
         for (int i = 0; i < index - 1; i++) {
-            if (current == null || current.next == null) {
-                throw new IndexOutOfBoundsException("Index out of bound");
-            }
             current = current.next;
         }
         newNode.next = current.next;
         current.next = newNode;
+        size++;
     }
 
     public void deleteFirst() {
@@ -62,6 +57,7 @@ public class SinglyLinkedLists<T> {
             throw new IllegalStateException("List is empty");
         }
         head = head.next;
+        size--;
     }
 
     public void deleteLast() {
@@ -70,6 +66,7 @@ public class SinglyLinkedLists<T> {
         }
         if (head.next == null) {
             head = null;
+            size--;
             return;
         }
 
@@ -78,10 +75,11 @@ public class SinglyLinkedLists<T> {
             current = current.next;
         }
         current.next = null;
+        size--;
     }
 
     public void deleteAt(int index) {
-        if (index < 0) {
+        if (index < 0 || index >=size) {
             throw new IndexOutOfBoundsException("Index out of bound");
         }
         if (index == 0) {
@@ -90,16 +88,14 @@ public class SinglyLinkedLists<T> {
         }
         Node current = head;
         for (int i = 0; i < index - 1; i++) {
-            if (current == null || current.next == null) {
-                throw new IndexOutOfBoundsException("Index out of bound");
-            }
             current = current.next;
         }
         current.next = current.next.next;
+        size--;
     }
 
     public Node<T> getAt(int index){
-        if (index<0 || index>=length())
+        if (index<0 || index>=size)
             throw new IndexOutOfBoundsException("Index out of bound");
 
         Node current = head;
@@ -111,7 +107,7 @@ public class SinglyLinkedLists<T> {
 
     public Node<T> findMiddle() {
         if (isEmpty()) throw new IllegalStateException("Index can't be negative");
-        int middleIndex = length() / 2;
+        int middleIndex = size / 2;
         return getAt(middleIndex);
     }
 
@@ -123,6 +119,8 @@ public class SinglyLinkedLists<T> {
     public static void main(String[] args) {
         SinglyLinkedLists<Integer> list = new SinglyLinkedLists<>();
         System.out.println(list);
+        System.out.println("Size: "+list.size);
+
 
         //Test Add First
 //        list.addFirst(1);
@@ -152,12 +150,24 @@ public class SinglyLinkedLists<T> {
         list.addLast(4);
         list.addLast(5);
         System.out.println(list);
+        System.out.println("Size: "+list.size);
+
+        list.addAt(6, 6);
+        System.out.println(list);
+
+        System.out.println("Size: "+list.size);
 
         list.deleteFirst();
         System.out.println(list);
 
+        System.out.println("Size: "+list.size);
         list.deleteLast();
         System.out.println(list);
+
+        list.deleteAt(4);
+        System.out.println(list);
+
+        System.out.println("Size: "+list.size);
 
     }
 }
