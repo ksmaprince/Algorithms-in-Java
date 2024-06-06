@@ -111,6 +111,20 @@ public class SinglyLinkedLists<T> {
         return getAt(middleIndex);
     }
 
+    public void reverse(){
+        Node prev = null;
+        Node current = head;
+        Node next = null;
+
+        while (current != null){
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+        head = prev;
+    }
+
     @Override
     public String toString() {
         return (isEmpty()) ? "Empty List" : head.toString();
@@ -168,6 +182,9 @@ public class SinglyLinkedLists<T> {
         System.out.println(list);
 
         System.out.println("Size: "+list.size);
+
+        list.reverse();
+        System.out.println(list);
 
     }
 }
