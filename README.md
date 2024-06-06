@@ -11,3 +11,7 @@ A study of Data Structures and Algorithms implementation with Java Programming L
 * [Singly Linked Lists](https://github.com/ksmaprince/Data-Structures-and-Algorithm-in-Java/tree/main/src/com/khun/dsa/linked_lists/singlylinkedlists)
 * [Doubly Linked Lists](https://github.com/ksmaprince/Data-Structures-and-Algorithm-in-Java/tree/main/src/com/khun/dsa/linked_lists/doublelinkedlist)
 
+### 3. Stack and Queue
+* [Stack](https://github.com/ksmaprince/Algorithms-in-Java/tree/main/src/com/khun/dsa/stack)
+* [Queue](https://github.com/ksmaprince/Algorithms-in-Java/tree/main/src/com/khun/dsa/queue)
+
