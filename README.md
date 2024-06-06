@@ -15,3 +15,5 @@ A study of Data Structures and Algorithms implementation with Java Programming L
 * [Stack](https://github.com/ksmaprince/Algorithms-in-Java/tree/main/src/com/khun/dsa/stack)
 * [Queue](https://github.com/ksmaprince/Algorithms-in-Java/tree/main/src/com/khun/dsa/queue)
 
+### 4. Tree
+* [Tree](https://github.com/ksmaprince/Algorithms-in-Java/tree/main/src/com/khun/dsa/tree)
